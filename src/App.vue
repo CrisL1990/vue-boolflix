@@ -1,7 +1,7 @@
 <template>
   <div id="app">
       <myHeader @searchFire='setKeyword'/>
-      <myMain :movies="result"/>
+      <myMain :movieCards="movies" :searching="flag"/>
   </div>
 </template>
 
@@ -15,14 +15,15 @@
 
     data(){
       return{
-        prefix: "https://api.themoviedb.org/3/movie/550?api_key=",
+        prefix: "https://api.themoviedb.org/3/search/movie?api_key=",
         myKey: "918e2ad402623b3f2672adefc7b3a96f",
         query: "&query=",
         wordToSearch: "",
 
         endPoint: "",
-
-        result: {}
+        flag: false,
+        movies: [],
+        series: []
       }
     },
 
@@ -34,8 +35,10 @@
     methods:{
 
       setKeyword(keyword){
+
           this.wordToSearch = keyword;
           this.endPoint = this.prefix + this.myKey + this.query + this.wordToSearch ;
+          console.log(this.endPoint);
 
           this.callApi();
       },
@@ -45,8 +48,10 @@
           axios.get(this.endPoint)
         
           .then((response) => {  
-              this.result = response.data;
-              console.log(this.result);
+              this.movies = response.data.results;
+              this.allResults = [...this.movies, ...this.series];
+              this.flag = true;
+              console.log(this.movies);
 
           })
            
@@ -56,6 +61,12 @@
           })
         
         }
+    },
+
+    computed:{
+      computedResults: function(){
+        return [...this.movies];
+      }
     }
   }
 </script>
