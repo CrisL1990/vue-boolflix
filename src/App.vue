@@ -2,6 +2,7 @@
   <div id="app">
       <myHeader @searchFire='setKeyword'/>
       <myMain :movieCards="movies" :searching="flag"/>
+      <LangFlag iso="en" />
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 
   import myHeader from './components/myHeader.vue';
   import myMain from './components/myMain.vue';
+  import LangFlag from 'vue-lang-code-flags';
   const axios = require('axios');
   export default {
     name: 'App',
@@ -29,7 +31,8 @@
 
     components:{
       myHeader,
-      myMain
+      myMain,
+      LangFlag,
     },
 
     methods:{
