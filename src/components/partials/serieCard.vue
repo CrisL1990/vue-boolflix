@@ -1,6 +1,7 @@
 <template>
     <div>
         <ul>
+            <li><img :src="imgUrl" alt=""></li>
             <li>{{serieCard.name}}</li>
             <li>{{serieCard.original_name}}</li>
             <li>{{serieCard.original_language}}</li>
@@ -18,6 +19,7 @@ export default {
     data(){
         return{
             toggle: false,
+            imgUrl: 'https://image.tmdb.org/t/p/' + 'w780' + this.serieCard.backdrop_path,
         }
     },
 

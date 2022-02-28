@@ -1,6 +1,7 @@
 <template>
     <div>
         <ul>
+            <li><img :src="imgUrl" alt=""></li>
             <li>{{movieCard.title}}</li>
             <li>{{movieCard.original_title}}</li>
             <li v-if="movieCard.original_language != ''"><LangFlag :iso="movieCard.original_language"/></li>
@@ -17,6 +18,8 @@ export default {
     data(){
         return{
             toggle: false,
+            imgSize: 'w780',
+            imgUrl: 'https://image.tmdb.org/t/p/' + 'w780' + this.movieCard.backdrop_path,
         }
     },
 
