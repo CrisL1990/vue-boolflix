@@ -11,7 +11,7 @@
   import myMain from './components/myMain.vue';
 
   const axios = require('axios');
-  
+
   export default {
     name: 'App',
 
@@ -45,10 +45,11 @@
           this.wordToSearch = keyword;
           
           this.FilmEndPoint = this.prefixFilm + this.myKey + this.query + this.wordToSearch ;
-          this.serieEndPoint = this.prefixSerie + this.myKey + this.query + this.wordToSearch ;
-         
+          this.serieEndPoint = this.prefixSerie + this.myKey + this.query + this.wordToSearch;
+
           this.callApiFilm();
           this.callApiSerie();
+          
           
       },
 
@@ -67,11 +68,10 @@
               console.log(error);
           })
         
-        }
       },
 
       callApiSerie(){
-           axios.get(this.serieEndPoint)
+          axios.get(this.serieEndPoint)
         
           .then((response) => {  
               this.series = response.data.results;
@@ -84,6 +84,7 @@
           })
         
       },
+    },
 
     computed:{
       computedResults: function(){

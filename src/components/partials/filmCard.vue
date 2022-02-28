@@ -3,7 +3,7 @@
         <ul>
             <li>{{movieCard.title}}</li>
             <li>{{movieCard.original_title}}</li>
-            <li><LangFlag :iso="movieCard.original_language"/></li>
+            <li v-if="movieCard.original_language != ''"><LangFlag :iso="movieCard.original_language"/></li>
             <li>{{movieCard.vote_average}}</li>
         </ul>
     </div>
