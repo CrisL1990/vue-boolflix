@@ -24,6 +24,16 @@
                             <li v-else>Descrizione non disponibile</li>
                             <div>Actors:</div>
                             <li><span updateCast></span><span v-for="(actor, index) in 5" :key="index">{{cast[index].name}}, </span></li>
+
+                            <div>Genre:</div>
+
+                            <li>
+                                <span v-for="(genre, index) in movieCard.genre_ids" :key="index">
+                                    <span v-for="(item, i) in genres" :key="i">
+                                        <span v-if="(genre == item.id)">{{item.name}}, </span>     
+                                    </span>
+                                </span>
+                            </li>
                             
                         </div>
                     </div>               
@@ -48,6 +58,7 @@ export default {
             vote: Math.ceil(this.movieCard.vote_average / 2),
             id: this.movieCard.id,
             cast: [],
+            genres: [],
         }
     },
 
@@ -68,7 +79,7 @@ export default {
         callCastApi: function(filmId){
             
             axios.get('https://api.themoviedb.org/3/movie/' + filmId +'/credits?api_key=918e2ad402623b3f2672adefc7b3a96f&language=en-US')
-        
+            
             .then((response) => {  
                 this.cast = response.data.cast;
             })
@@ -77,13 +88,28 @@ export default {
                 // handle error
                 console.log(error);
             })
-
             return this.cast
+        },
+
+        callGenres: function(){
+
+            axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=918e2ad402623b3f2672adefc7b3a96f&language=en-US')
+        
+            .then((response) => {  
+                this.genres = response.data.genres;
+            })
+            
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            return this.genres
         }
     },
 
     mounted(){
         this.callCastApi(this.id)
+        this.callGenres()
     },
     
     
@@ -91,23 +117,11 @@ export default {
 
         
         updateCast(){
-
             return this.callCastApi(this.id)
+        },
 
-            /*
-            axios.get('https://api.themoviedb.org/3/movie/' + filmId +'/credits?api_key=918e2ad402623b3f2672adefc7b3a96f&language=en-US')
-        
-            .then((response) => {  
-                this.cast = response.data.cast;
-            })
-            
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
-            console.log(this.cast)
-            return this.cast
-            */
+        updateGenre(){
+            return this.callGenres()
         }
         
     }   
