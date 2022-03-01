@@ -9,7 +9,7 @@
                         <li v-else><img class="img-fluid" src="../../assets/img/movie-clapboard.jpeg" alt=""></li>
                     </div>
                     
-                    <div class="back">
+                    <div class="back" @click="callCastApi(id)">
                         <div class="info-box position-absolute">
                             <li><span>Titolo: </span>{{movieCard.title}}</li>
                             <li><span>Titolo originale: </span>{{movieCard.original_title}}</li>
@@ -22,6 +22,9 @@
                             </li>
                             <li v-if="movieCard.overview"><span>Overview: </span>{{movieCard.overview}}</li>
                             <li v-else>Descrizione non disponibile</li>
+                            <div>Actors:</div>
+                            <li><span updateCast></span><span v-for="(actor, index) in 5" :key="index">{{cast[index].name}}, </span></li>
+                            
                         </div>
                     </div>               
                 </div>          
@@ -33,7 +36,7 @@
 <script>
 import LangFlag from 'vue-lang-code-flags';
 
-//const axios = require('axios');
+const axios = require('axios');
 
 export default {
     name: 'filmCard',
@@ -59,8 +62,8 @@ export default {
         LangFlag,
     },
 
-/*
-    computed:{
+    
+    methods:{
 
         callCastApi: function(filmId){
             
@@ -74,9 +77,41 @@ export default {
                 // handle error
                 console.log(error);
             })
+
+            return this.cast
         }
-    }
-*/
+    },
+
+    mounted(){
+        this.callCastApi(this.id)
+    },
+    
+    
+    computed:{
+
+        
+        updateCast(){
+
+            return this.callCastApi(this.id)
+
+            /*
+            axios.get('https://api.themoviedb.org/3/movie/' + filmId +'/credits?api_key=918e2ad402623b3f2672adefc7b3a96f&language=en-US')
+        
+            .then((response) => {  
+                this.cast = response.data.cast;
+            })
+            
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            console.log(this.cast)
+            return this.cast
+            */
+        }
+        
+    }   
+    
 }
 
 
