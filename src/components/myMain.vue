@@ -34,7 +34,7 @@ export default {
     data(){
         return{
 
-
+            castID: [],
         }
 
     },
@@ -46,8 +46,9 @@ export default {
         'serVotes': Array,
         'searching': Boolean
     },
-
 }
+
+
 </script>
 
 <style scoped lang="scss">

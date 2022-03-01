@@ -23,22 +23,18 @@
                             <li v-if="movieCard.overview"><span>Overview: </span>{{movieCard.overview}}</li>
                             <li v-else>Descrizione non disponibile</li>
                         </div>
-                    </div>
-                    
-                </div>
-                
+                    </div>               
+                </div>          
             </div>
-            
-
-            <!--
-            
-            -->
         </ul>
     </div>
 </template>
 
 <script>
 import LangFlag from 'vue-lang-code-flags';
+
+//const axios = require('axios');
+
 export default {
     name: 'filmCard',
 
@@ -46,19 +42,41 @@ export default {
         return{
             toggle: false,
             imgUrl: 'https://image.tmdb.org/t/p/' + 'w342' + this.movieCard.poster_path,
-            vote: Math.ceil(this.movieCard.vote_average / 2) 
+            vote: Math.ceil(this.movieCard.vote_average / 2),
+            id: this.movieCard.id,
+            cast: [],
         }
     },
+
 
     props:{
         'movieCard': Object,
        
     },
 
+
     components:{
         LangFlag,
     },
 
+/*
+    computed:{
+
+        callCastApi: function(filmId){
+            
+            axios.get('https://api.themoviedb.org/3/movie/' + filmId +'/credits?api_key=918e2ad402623b3f2672adefc7b3a96f&language=en-US')
+        
+            .then((response) => {  
+                this.cast = response.data.cast;
+            })
+            
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+        }
+    }
+*/
 }
 
 
