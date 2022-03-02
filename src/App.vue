@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-      <myHeader @searchFire='setKeyword'/>
-      <myMain :movieCards="movies" :serieCards="series" :searching="flag"/>
+      <myHeader @changeGenre="getGenreSelection" @searchFire='setKeyword'/>
+      <myMain :genere="genre" :movieCards="movies" :serieCards="series" :searching="flag"/>
   </div>
 </template>
 
@@ -30,6 +30,8 @@
         
         movies: [],
         series: [],
+
+        genre: ""
       }
     },
 
@@ -84,6 +86,10 @@
           })
         
       },
+
+      getGenreSelection(payload){
+        this.genre = payload
+      }
 
     },
 

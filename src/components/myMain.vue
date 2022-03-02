@@ -48,7 +48,8 @@ export default {
         'serieCards': Array,
         'movVotes': Array,
         'serVotes': Array,
-        'searching': Boolean
+        'searching': Boolean,
+        'genere': String
     },
 }
 

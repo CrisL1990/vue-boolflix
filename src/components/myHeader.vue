@@ -6,9 +6,11 @@
 
         <form>
             <input v-model="search" type="text" name="" placeholder="Search movie or serie" id="" class="mx-3">
-            <select class="mx-3" name="Select genre" id="">
+
+            <select @change="$emit('changeGenre', selected)" v-model="selected" class="mx-3" name="Select genre" id="">
                 <option :value="genre.name" v-for="(genre, index) in genresMovie" :key="index">{{genre.name}}</option>
             </select>
+
             <button class="btn btn-danger" @click.prevent="searchTransfer">Search</button>
         </form>
         
@@ -26,7 +28,7 @@ export default {
         return{
             search: "",
             genresMovie: [],
-            selectetGenre: ""
+            selected: ""
         }
         
     },
@@ -52,6 +54,11 @@ export default {
 
             return this.genresMovie
         },
+
+        prova(){
+            this.selectetGenre = this.genresMovie.name
+           
+        }
     }, 
     
     mounted(){
