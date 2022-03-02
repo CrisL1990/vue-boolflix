@@ -23,6 +23,7 @@ import filmCard from './partials/filmCard.vue'
 import serieCard from './partials/serieCard.vue'
 
 
+
 export default {
     name: 'myMain',
 
@@ -33,6 +34,9 @@ export default {
 
     data(){
         return{
+            
+            genresMovie: [],
+            genreaSerie: [],
 
             castID: [],
         }

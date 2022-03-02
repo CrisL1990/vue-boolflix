@@ -6,6 +6,9 @@
 
         <form>
             <input v-model="search" type="text" name="" placeholder="Search movie or serie" id="" class="mx-3">
+            <select class="mx-3" name="Select genre" id="">
+                <option :value="genre.name" v-for="(genre, index) in genresMovie" :key="index">{{genre.name}}</option>
+            </select>
             <button class="btn btn-danger" @click.prevent="searchTransfer">Search</button>
         </form>
         
@@ -13,12 +16,17 @@
 </template>
 
 <script>
+
+const axios = require('axios');
+
 export default {
     name: 'myHeader',
 
     data(){
         return{
             search: "",
+            genresMovie: [],
+            selectetGenre: ""
         }
         
     },
@@ -28,7 +36,27 @@ export default {
         searchTransfer(){
             this.$emit('searchFire', this.search);
         },
-    },    
+
+        callGenresMovie: function(){
+            axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=918e2ad402623b3f2672adefc7b3a96f&language=en-US')
+
+            .then((response) => {  
+                this.genresMovie = response.data.genres;
+            })
+            
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            console.log(this.genresMovie)
+
+            return this.genresMovie
+        },
+    }, 
+    
+    mounted(){
+        this.callGenresMovie()
+    }
 }
 </script>
 
