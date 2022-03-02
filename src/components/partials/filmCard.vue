@@ -1,6 +1,7 @@
 <template>
+    
     <div>
-        <ul>
+        <ul :class="(miaFunzione == true || genere == '') ? '' : 'd-none' ">
             <div class="img-cont position-relative">
                 <div class="flip-card-inner">
 
@@ -14,7 +15,7 @@
                     <!--Inizio Info film-->
                     <div class="back">
                         <div class="info-box position-absolute">
-                            
+                                
                             <!--Inizio titolo-->
                             <li><span>Titolo: </span>{{movieCard.title}}</li>
                             <li><span>Titolo originale: </span>{{movieCard.original_title}}</li>
@@ -34,7 +35,7 @@
                             <li v-if="movieCard.overview"><span>Overview: </span>{{movieCard.overview}}</li>
                             <li v-else>Descrizione non disponibile</li>
                             <!--Fine overview-->
-                            
+                                
                             <!--Inizio cast-->
                             <div>Actors:</div>
                             <li><span updateCast></span><span v-for="(actor, index) in 5" :key="index">{{cast[index].name}}, </span></li>
@@ -45,7 +46,7 @@
                             <li>
                                 <span v-for="(genre, index) in movieCard.genre_ids" :key="index">
                                     <span v-for="(item, i) in genres" :key="i">
-                                        <span v-if="(genre == item.id)">{{item.name}}, </span>     
+                                        <span v-if="(genre == item.id)">{{item.name}}, </span>
                                     </span>
                                 </span>
                             </li>
@@ -69,17 +70,24 @@ export default {
 
     data(){
         return{
-            toggle: false,
             imgUrl: 'https://image.tmdb.org/t/p/' + 'w342' + this.movieCard.poster_path,
             vote: Math.ceil(this.movieCard.vote_average / 2),
             id: this.movieCard.id,
             cast: [],
             genres: [],
+
+            aaa: [],
+            bbb: false,
+            ccc:"",
+            ddd: '',
+
+            cardGenres:[]
         }
     },
-
+    
     props:{
         'movieCard': Object,
+        'genere': String
     },
 
     components:{
@@ -109,6 +117,8 @@ export default {
 
             .then((response) => {  
                 this.genres = response.data.genres;
+                this.Funzione()
+                
             })
             
             .catch(function (error) {
@@ -116,15 +126,62 @@ export default {
                 console.log(error);
             })
             return this.genres
+        },
+
+        
+        Funzione(){
+            this.movieCard.genre_ids.forEach(element => {
+                    this.cardGenres.push(element)  
+                });
+
+                for(let i = 0; i < this.cardGenres.length; i++){
+                    for(let j = 0; j < this.genres.length; j++){
+                        if(this.cardGenres[i] == this.genres[j].id){
+                            this.aaa.push(this.genres[j].name)
+                        }
+                    }
+                }
+
+                for(let x = 0; x < this.aaa.length; x ++){
+                    if(this.aaa[x] == this.genere){
+                        this.bbb = true
+                    }
+                    else{
+                        this.bbb = false
+                    }
+                }
+
+                return this.bbb
         }
+        
+        
     },
 
     //Richiama le due funzioni per la chiamata API al mounted
     mounted(){
         this.callCastApi(this.id)
-        this.callGenres()
+        this.callGenres()  
+         
     },
+
+    computed:{
+
+        miaFunzione(){
+            
+            let nuova = ''
+            let toggle = false
+            nuova = this.genere
+            
+            for(let i = 0; i < this.aaa.length; i++){
+                if(nuova == this.aaa[i]){
+                    toggle = true
+                }
+            }
+            return toggle
+        }      
     
+        
+    }
 }
 </script>
 
@@ -132,3 +189,5 @@ export default {
     //Importa stilizzazione grafica della singola card
     @import "../../assets/scss/cards.scss";
 </style>
+
+<!--:class="(miaFunzione == genere) ? '' : 'd-none' "-->
