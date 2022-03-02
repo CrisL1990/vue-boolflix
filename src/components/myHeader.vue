@@ -28,9 +28,7 @@ export default {
         searchTransfer(){
             this.$emit('searchFire', this.search);
         },
-    }
-
-    
+    },    
 }
 </script>
 
